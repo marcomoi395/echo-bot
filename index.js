@@ -2,10 +2,13 @@ const {Telegraf, session} = require('telegraf')
 const middleware = require('./middleware/auth.middleware')
 const textHandlers = require('./handler/textHandlers')
 const scheduleDailyMessage = require("./handler/scheduleDailyMessage");
+const {connect} = require("./config/database");
 require('dotenv').config()
 
 global.bot = new Telegraf(process.env.BOT_TOKEN)
 bot.use(session());
+
+connect();
 
 // Schedule Daily Message
 scheduleDailyMessage(bot);

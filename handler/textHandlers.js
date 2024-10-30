@@ -1,6 +1,6 @@
 const regex = require("../utils/regex");
 const Markup = require("telegraf/markup");
-// const addConfessionService = require("../services/addConfession.service");
+const addConfessionService = require("../service/addConfession.service");
 const Notion = require("../service/notion.service");
 const {recordedSuccessfully} = require("../utils/formSendUser");
 const getTimeUntilEndOfDay = require("../utils/getTimeUntilEndOfDay");
@@ -14,7 +14,7 @@ module.exports.message = async (ctx) => {
     const message = ctx.message.text;
     try {
         if (ctx.session.logging) {
-            // await addConfessionService(ctx, message);
+            await addConfessionService(ctx, message);
         } else if (regex.checkRegexExpense(message)) {
             const messageRegex = message.match(/^(.+?)\s(\d+)\s*(.+)?$/);
 
@@ -107,7 +107,6 @@ module.exports.addConfession = async (ctx) => {
     await ctx.deleteMessage(ctx.message.message_id);
 
     // Xóa tin nhắn khi không nhập gì trong 5p
-
     setTimeout(async () => {
         if (ctx.session.logging === true) {
             try {
