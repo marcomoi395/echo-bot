@@ -6,6 +6,7 @@ const auth = (ctx, next) => {
 
     if (userId.toString() === ownerId.toString()) {
         if (!ctx.session) ctx.session = {};
+        ctx.session.notes = [];
         return next();
     } else {
         ctx.reply("Bạn không có quyền sử dụng bot này.");
